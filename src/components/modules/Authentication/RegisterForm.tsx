@@ -15,8 +15,9 @@ import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
-// import { useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const registerSchema = z
   .object({
@@ -31,6 +32,8 @@ const registerSchema = z
     confirmPassword: z
       .string()
       .min(8, { error: "Confirm Password is too short" }),
+    role: z.enum(["SENDER", "RECEIVER"], { error: "Invalid Role Type" }),
+
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password do not match",
@@ -41,7 +44,7 @@ export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  //   const [register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -51,6 +54,7 @@ export function RegisterForm({
       email: "",
       password: "",
       confirmPassword: "",
+      role: "SENDER",
     },
   });
 
@@ -59,16 +63,17 @@ export function RegisterForm({
       name: data.name,
       email: data.email,
       password: data.password,
+      role: data.role
     };
     console.log(userInfo);
-    // try {
-    //   //   const result = await register(userInfo).unwrap();
-    //   console.log(result);
-    //   toast.success("User created successfully");
-    //   navigate("/verify");
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+      toast.success("User created successfully");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -119,6 +124,32 @@ export function RegisterForm({
                 </FormItem>
               )}
             />
+
+            {/*  */}
+            <FormField
+              control={form.control}
+              name="role"
+
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select your role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="SENDER">Sender</SelectItem>
+                      <SelectItem value="RECEIVER">Receiver</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/*  */}
+
             <FormField
               control={form.control}
               name="password"
