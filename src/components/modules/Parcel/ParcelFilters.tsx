@@ -22,13 +22,23 @@ export const ParcelFilters = () => {
         params.set("limit", value)
         setSearchParams(params)
     }
+    const handleStatusFilter = (value: string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("currentStatus", value)
+        setSearchParams(params)
+    }
+    const handleSort = (value: string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("sort", value)
+        setSearchParams(params)
+    }
 
     return (
-        <div className="grid grid-cols-2 items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
             {/* searching feature */}
-            <div className="*:not-first:mt-2 max-w-[250px]">
+            <div className="*:not-first:mt-2 ">
                 <Label htmlFor={id}>Search by Sender or Receiver Email</Label>
-                <div className="relative">
+                <div className="relative max-w-[180px]">
                     <Input
                         onKeyUp={handleSearch}
                         onMouseUp={handleSearch}
@@ -53,7 +63,7 @@ export const ParcelFilters = () => {
             <div>
                 <Label className="mb-2">Limit</Label>
                 <Select onValueChange={handleLimit}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[100px]">
                         <SelectValue placeholder="Select a Limit" />
                     </SelectTrigger>
                     <SelectContent>
@@ -68,9 +78,10 @@ export const ParcelFilters = () => {
                     </SelectContent>
                 </Select>
             </div>
+
             <div>
                 <Label className="mb-2">Current Status</Label>
-                <Select onValueChange={handleLimit}>
+                <Select onValueChange={handleStatusFilter}>
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select a Limit" />
                     </SelectTrigger>
@@ -83,6 +94,26 @@ export const ParcelFilters = () => {
                                 ))
                             }
 
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div>
+                <Label className="mb-2">Sort</Label>
+                <Select onValueChange={handleSort}>
+                    <SelectTrigger className="w-[100px]">
+                        <SelectValue placeholder="Sort By..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Fruits</SelectLabel>
+                            <SelectItem value="createdAt">Created At (ASC)</SelectItem>
+                            <SelectItem value="-createdAt">Created At (DSC)</SelectItem>
+                            <SelectItem value="weight">Weight (ASC)</SelectItem>
+                            <SelectItem value="-weight">Weight (DSC)</SelectItem>
+                            <SelectItem value="fee">Fee (ASC)</SelectItem>
+                            <SelectItem value="-fee">Fee (DSC)</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>

@@ -18,8 +18,10 @@ export default function ParcelTable() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchEmail = searchParams.get("searchEmail") || undefined;
   const limit = searchParams.get("limit") || undefined;
+  const currentStatus = searchParams.get("currentStatus") || undefined;
+  const sort = searchParams.get("sort") || undefined;
   console.log(searchEmail);
-  const { data } = useGetAllParcelsQuery({ searchEmail, limit })
+  const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort })
   console.log(data);
   return (
     <div>
