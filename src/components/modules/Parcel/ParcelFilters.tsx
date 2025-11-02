@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useId } from "react"
 import { ArrowRightIcon, SearchIcon } from "lucide-react"
 
@@ -59,7 +60,7 @@ export const ParcelFilters = () => {
                     </button>
                 </div>
             </div>
-
+            {/* limit */}
             <div>
                 <Label className="mb-2">Limit</Label>
                 <Select onValueChange={handleLimit}>
@@ -78,7 +79,7 @@ export const ParcelFilters = () => {
                     </SelectContent>
                 </Select>
             </div>
-
+            {/* current status */}
             <div>
                 <Label className="mb-2">Current Status</Label>
                 <Select onValueChange={handleStatusFilter}>
@@ -98,7 +99,7 @@ export const ParcelFilters = () => {
                     </SelectContent>
                 </Select>
             </div>
-
+            {/* sorting */}
             <div>
                 <Label className="mb-2">Sort</Label>
                 <Select onValueChange={handleSort}>

@@ -11,6 +11,9 @@ import { useGetAllParcelsQuery } from "@/redux/features/parcel/parcels.api"
 import type { IParcel } from "@/types/parcelTypes";
 import { ParcelFilters } from "./ParcelFilters";
 import { useSearchParams } from "react-router";
+import { ParcelStatusBadge } from "./ParcelStatusBadge";
+// import { Button } from "@/components/ui/button";
+import { UpdateParcelStatus } from "../Admin/UpdateParcelStatus";
 
 
 export default function ParcelTable() {
@@ -20,9 +23,9 @@ export default function ParcelTable() {
   const limit = searchParams.get("limit") || undefined;
   const currentStatus = searchParams.get("currentStatus") || undefined;
   const sort = searchParams.get("sort") || undefined;
-  console.log(searchEmail);
+  // console.log(searchEmail);
   const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort })
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <ParcelFilters></ParcelFilters>
@@ -42,11 +45,16 @@ export default function ParcelTable() {
             {data?.data?.map((parcel: IParcel) => (
               <TableRow key={parcel._id}>
                 <TableCell className="font-medium">{parcel._id}</TableCell>
-                <TableCell className="text-center">{parcel.currentStatus}</TableCell>
+                <TableCell className="text-center">
+                  <ParcelStatusBadge status={parcel.currentStatus}></ParcelStatusBadge>
+                </TableCell>
                 <TableCell className="text-center">{parcel.sender_email}</TableCell>
                 <TableCell className="text-center">{parcel.fee}</TableCell>
                 <TableCell className="text-center">{parcel.weight}</TableCell>
-                <TableCell className="text-right">{"........"}</TableCell>
+                <TableCell className="text-right">
+                  {/* <Button variant={"outline"}>Update Status</Button> */}
+                  <UpdateParcelStatus id={parcel._id as string}></UpdateParcelStatus>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

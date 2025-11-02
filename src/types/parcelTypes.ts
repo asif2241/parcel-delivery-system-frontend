@@ -18,7 +18,7 @@ export const PARCEL_STATUS = {
     RETURNED: "RETURNED",
     RESCHEDULE: "RESCHEDULE",
     CANCELLED: "CANCELLED"
-}
+} as const
 export type PARCEL_STATUS = typeof PARCEL_STATUS[keyof typeof PARCEL_STATUS];
 
 
@@ -32,8 +32,8 @@ export const PARCEL_TYPE = {
     VALUABLE: "VALUABLE",
     OVERSIZED: "OVERSIZED",
     HAZARDOUS: "HAZARDOUS"
-}
-export type PARCEL_TYPE = typeof PARCEL_STATUS[keyof typeof PARCEL_STATUS];
+} as const
+export type PARCEL_TYPE = typeof PARCEL_TYPE[keyof typeof PARCEL_TYPE];
 
 
 export interface IParcel {
