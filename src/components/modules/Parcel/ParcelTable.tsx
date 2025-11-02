@@ -14,6 +14,7 @@ import { useSearchParams } from "react-router";
 import { ParcelStatusBadge } from "./ParcelStatusBadge";
 // import { Button } from "@/components/ui/button";
 import { UpdateParcelStatus } from "../Admin/UpdateParcelStatus";
+import PaginationComp from "@/components/Pagination";
 
 
 export default function ParcelTable() {
@@ -23,9 +24,20 @@ export default function ParcelTable() {
   const limit = searchParams.get("limit") || undefined;
   const currentStatus = searchParams.get("currentStatus") || undefined;
   const sort = searchParams.get("sort") || undefined;
+  const page = searchParams.get("page") || "1"; // Default to page 1
+
   // console.log(searchEmail);
-  const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort })
+  const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort, page })
   // console.log(data);
+
+  // Handle page change
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", newPage.toString());
+    setSearchParams(params);
+  };
+
+
   return (
     <div>
       <ParcelFilters></ParcelFilters>
@@ -61,9 +73,9 @@ export default function ParcelTable() {
 
         </Table>
       </div>
-      <p className="mt-8 text-center text-sm text-muted-foreground">
-        Table with sticky header
-      </p>
+      <div className="my-5">
+        <PaginationComp currentPage={data?.meta?.page} totalPages={data?.meta?.totalPage} paginationItemsToDisplay={5} onPageChange={handlePageChange}></PaginationComp>
+      </div>
     </div>
   )
 }
