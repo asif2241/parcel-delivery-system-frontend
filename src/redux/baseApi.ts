@@ -6,6 +6,6 @@ export const baseApi = createApi({
     baseQuery: axiosBaseQuery(),
 
 
-    tagTypes: ["USER", "PARCEL"],
+    tagTypes: ["USER", "PARCEL", "USERS"],
     endpoints: () => ({}),
 });
