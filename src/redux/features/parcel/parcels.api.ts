@@ -1,14 +1,16 @@
 import { baseApi } from "@/redux/baseApi";
+import type { TResponse } from "@/types/api.types";
 
 export const parcelsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        // login: builder.mutation({
-        //     query: (userInfo) => ({
-        //         url: "/auth/login",
-        //         method: "POST",
-        //         data: userInfo,
-        //     }),
-        // }),
+        createParcel: builder.mutation({
+            query: (parcelInfo) => ({
+                url: "/parcel/create-parcel",
+                method: "POST",
+                data: parcelInfo,
+            }),
+        }),
+
         getAllParcels: builder.query({
             query: (params) => ({
                 url: "/parcel/all-parcel",
@@ -16,6 +18,12 @@ export const parcelsApi = baseApi.injectEndpoints({
                 params
             }),
             providesTags: ["PARCEL"]
+        }),
+        trackParcel: builder.query({
+            query: (trackingId) => ({
+                url: `/parcel/track/${trackingId}`,
+                method: "GET",
+            }),
         }),
         getSingleParcel: builder.query({
             query: (parcelId) => ({
@@ -30,8 +38,16 @@ export const parcelsApi = baseApi.injectEndpoints({
                 data: body
             }),
             invalidatesTags: ["PARCEL"]
+        }),
+        cancelParcel: builder.mutation<TResponse<null>, string>({
+            query: (params) => ({
+                url: `/parcel/cancel/${params}`,
+                method: "PATCH",
+
+            }),
+            invalidatesTags: ["PARCEL"]
         })
     }),
 });
 
-export const { useGetAllParcelsQuery, useGetSingleParcelQuery, useUpdateParcelStatusMutation } = parcelsApi;
+export const { useCreateParcelMutation, useGetAllParcelsQuery, useTrackParcelQuery, useGetSingleParcelQuery, useUpdateParcelStatusMutation, useCancelParcelMutation } = parcelsApi;

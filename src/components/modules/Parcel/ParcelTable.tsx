@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Table,
   TableBody,
@@ -7,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { useGetAllParcelsQuery } from "@/redux/features/parcel/parcels.api"
+import { useCancelParcelMutation, useGetAllParcelsQuery } from "@/redux/features/parcel/parcels.api"
 import type { IParcel } from "@/types/parcelTypes";
 import { ParcelFilters } from "./ParcelFilters";
 import { useSearchParams } from "react-router";
@@ -15,6 +16,10 @@ import { ParcelStatusBadge } from "./ParcelStatusBadge";
 // import { Button } from "@/components/ui/button";
 import { UpdateParcelStatus } from "../Admin/UpdateParcelStatus";
 import PaginationComp from "@/components/Pagination";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { Role } from "@/types/user.types";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 
 export default function ParcelTable() {
@@ -28,6 +33,9 @@ export default function ParcelTable() {
 
   // console.log(searchEmail);
   const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort, page })
+  const { data: userInfo, isLoading } = useUserInfoQuery(undefined);
+  const [cancelParcel] = useCancelParcelMutation();
+  // console.log(userInfo);
   // console.log(data);
 
   // Handle page change
@@ -37,6 +45,34 @@ export default function ParcelTable() {
     setSearchParams(params);
   };
 
+  // this function will execute in logged in user is a SENDER
+  const handleCancelParcel = async (id: string) => {
+    try {
+      const res = await cancelParcel(id).unwrap();
+      console.log(res);
+      if (res.success) {
+        toast.success("Parcel Cancelled")
+      } else {
+        toast.error(`${res.message}`)
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error)
+      toast.error(`${error?.data?.message}`)
+    }
+  }
+
+  const getActionBtn = (role: string, id: string) => {
+    switch (role) {
+      case Role.SUPER_ADMIN:
+        return <UpdateParcelStatus id={id as string}></UpdateParcelStatus>
+      case Role.ADMIN:
+        return <UpdateParcelStatus id={id as string}></UpdateParcelStatus>
+      case Role.SENDER:
+        return <Button onClick={() => handleCancelParcel(id as string)}>Cancel Parcel</Button>
+    }
+  }
+
 
   return (
     <div>
@@ -45,7 +81,7 @@ export default function ParcelTable() {
         <Table className="border-separate border-spacing-0 [&_td]:border-border [&_tfoot_td]:border-t [&_th]:border-b [&_th]:border-border [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b">
           <TableHeader className="sticky top-0 z-10 bg-background/90 backdrop-blur-xs">
             <TableRow className="hover:bg-transparent">
-              <TableHead>ID</TableHead>
+              <TableHead>TrackingID</TableHead>
               <TableHead className="text-center">Status</TableHead>
               <TableHead className="text-center">Sender Email</TableHead>
               <TableHead className="text-center">Fee</TableHead>
@@ -56,7 +92,7 @@ export default function ParcelTable() {
           <TableBody>
             {data?.data?.map((parcel: IParcel) => (
               <TableRow key={parcel._id}>
-                <TableCell className="font-medium">{parcel._id}</TableCell>
+                <TableCell className="font-medium">{parcel.trackingId}</TableCell>
                 <TableCell className="text-center">
                   <ParcelStatusBadge status={parcel.currentStatus}></ParcelStatusBadge>
                 </TableCell>
@@ -65,7 +101,9 @@ export default function ParcelTable() {
                 <TableCell className="text-center">{parcel.weight}</TableCell>
                 <TableCell className="text-right">
                   {/* <Button variant={"outline"}>Update Status</Button> */}
-                  <UpdateParcelStatus id={parcel._id as string}></UpdateParcelStatus>
+                  {
+                    getActionBtn(userInfo?.data?.role as string, parcel._id as string)
+                  }
                 </TableCell>
               </TableRow>
             ))}

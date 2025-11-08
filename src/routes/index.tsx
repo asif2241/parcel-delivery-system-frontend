@@ -6,8 +6,12 @@ import { generateRoutes } from "@/utils/generateRoutes";
 import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
-import { receiverSidebarItems } from "./receiverSidebarItems";
 import { Unauthorized } from "@/pages/Unauthorized";
+import { withAuth } from "@/utils/withAuth";
+import { role } from "@/constant/role";
+import type { TRole } from "@/types";
+import ParcelTrackingPage from "@/pages/TrackParcel";
+import { HomeLayout } from "@/components/layout/HomeLayout";
 
 export const router = createBrowserRouter([
     {
@@ -15,12 +19,17 @@ export const router = createBrowserRouter([
         path: "/",
         children: [
             {
-
+                path: "/",
+                Component: HomeLayout
+            },
+            {
+                Component: ParcelTrackingPage,
+                path: "/track/:trackingId"
             }
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, role.SUPER_ADMIN as TRole),
         path: "/admin",
         children: [
             {
@@ -30,7 +39,7 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, role.ADMIN as TRole),
         path: "/admin",
         children: [
             {
@@ -39,26 +48,18 @@ export const router = createBrowserRouter([
             ...generateRoutes(adminSidebarItems)
         ]
     },
-    // {
-    //     Component: DashboardLayout,
-    //     path: "/sender",
-    //     children: [
-    //         {
-    //             index: true, element: <Navigate to="/admin/analytics" /> //ekane
-    //         },
-    //         ...generateRoutes(senderSidebarItems)
-    //     ]
-    // },
-    // {
-    //     Component: DashboardLayout,
-    //     path: "/receiver",
-    //     children: [
-    //         {
-    //             index: true, element: <Navigate to="/admin/analytics" /> //ekane
-    //         },
-    //         ...generateRoutes(receiverSidebarItems)
-    //     ]
-    // },
+
+    {
+        Component: withAuth(DashboardLayout, role.SENDER as TRole),
+        path: "/sender",
+        children: [
+            {
+                index: true, element: <Navigate to="/sender/create-parcel" /> //ekane
+            },
+            ...generateRoutes(senderSidebarItems)
+        ]
+    },
+
 
     {
         Component: Login,

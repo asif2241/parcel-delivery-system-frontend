@@ -10,9 +10,12 @@ import {
 import { useSearchParams } from "react-router";
 // import { Button } from "@/components/ui/button";
 import PaginationComp from "@/components/Pagination";
-import { useGetAllUsersQuery } from "@/redux/features/user/user.api";
+import { useBlockUserMutation, useGetAllUsersQuery, useUnblockUserMutation } from "@/redux/features/user/user.api";
 import { UsersFilters } from "./UsersFilters";
 import type { IUser } from "@/types/user.types";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { UpdateUserRole } from "./UpdateUserRole";
 
 
 export default function UsersTable() {
@@ -26,6 +29,8 @@ export default function UsersTable() {
 
     // console.log(searchEmail);
     const { data } = useGetAllUsersQuery({ searchEmail, limit, sort, page, role })
+    const [blockUser] = useBlockUserMutation()
+    const [unblockUser] = useUnblockUserMutation()
     // console.log(data);
 
     // Handle page change
@@ -34,6 +39,33 @@ export default function UsersTable() {
         params.set("page", newPage.toString());
         setSearchParams(params);
     };
+
+    const handleBlock = async (id: string, action: "BLOCK" | "UNBLOCK") => {
+        if (action === "BLOCK") {
+            const toastId = toast.loading("Blocking User...");
+            try {
+                const res = await blockUser(id).unwrap();
+
+                if (res.success) {
+                    toast.success("Removed", { id: toastId });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if (action === "UNBLOCK") {
+            const toastId = toast.loading("Unblocking User...");
+            try {
+                const res = await unblockUser(id).unwrap();
+
+                if (res.success) {
+                    toast.success("Unblocked User", { id: toastId });
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
 
 
     return (
@@ -45,7 +77,7 @@ export default function UsersTable() {
                         <TableRow className="hover:bg-transparent">
                             <TableHead>Name</TableHead>
                             <TableHead className="text-center">Email</TableHead>
-                            <TableHead className="text-center">Phone</TableHead>
+                            {/* <TableHead className="text-center">Phone</TableHead> */}
                             <TableHead className="text-center">Role</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
@@ -55,9 +87,20 @@ export default function UsersTable() {
                             <TableRow key={user._id}>
                                 <TableCell className="font-medium">{user.name}</TableCell>
                                 <TableCell className="text-center"> {user.email} </TableCell>
-                                <TableCell className="text-center">{user.phone}</TableCell>
+                                {/* <TableCell className="text-center">{user.phone}</TableCell> */}
                                 <TableCell className="text-center">{user.role}</TableCell>
-                                <TableCell className="text-right">{"....."} </TableCell>
+                                <TableCell className="text-right">
+                                    <div className="flex justify-center items-center gap-2">
+                                        <>
+                                            {
+                                                !user.isBlocked ? <Button onClick={() => handleBlock(user._id as string, "BLOCK")} variant={"destructive"} >Block</Button> : <Button onClick={() => handleBlock(user._id as string, "UNBLOCK")} variant={"secondary"} >Unblock</Button>
+                                            }
+                                        </>
+                                        <>
+                                            <UpdateUserRole id={user._id as string}></UpdateUserRole>
+                                        </>
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

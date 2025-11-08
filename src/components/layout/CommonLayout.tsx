@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import type { ReactNode } from "react"
+import { Outlet } from "react-router";
 import Footer from "./Footer";
 import Navbar from "./Navbar"
 
@@ -13,7 +15,7 @@ const CommonLayout = ({ children }: IProps) => {
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar></Navbar>
-            <div className="grow-1">{children}</div>
+            <div className="grow-1"><Outlet></Outlet></div>
             <Footer></Footer>
         </div>
     )
