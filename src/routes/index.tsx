@@ -12,6 +12,7 @@ import { role } from "@/constant/role";
 import type { TRole } from "@/types";
 import ParcelTrackingPage from "@/pages/TrackParcel";
 import { HomeLayout } from "@/components/layout/HomeLayout";
+import { AboutUsPage } from "@/pages/AboutUsPage";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
             {
                 Component: ParcelTrackingPage,
                 path: "/track/:trackingId"
+            },
+            {
+                Component: AboutUsPage,
+                path: "about-us"
             }
         ]
     },
