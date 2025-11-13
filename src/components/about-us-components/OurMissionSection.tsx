@@ -3,7 +3,7 @@ import MissionImg from "@/assets/HeroImgParcel.svg"; // replace with your actual
 export default function OurMission() {
     return (
         <section className="bg-white dark:bg-gray-900 py-24">
-            <div className="container mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2">
+            <div className=" mx-auto grid max-w-[1200px] items-center gap-12 px-6 md:grid-cols-2">
 
 
                 {/* Right: Image */}

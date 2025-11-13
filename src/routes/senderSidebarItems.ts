@@ -1,5 +1,6 @@
 
 // import Analytics from "@/pages/Admin/Analytics";
+import Analytics from "@/pages/Analytics";
 import ParcelTablePage from "@/pages/ParcelTablePage";
 import { CreateParcelPage } from "@/pages/Sender/CreateParcelPage";
 import type { ISidebarItem } from "@/types";
@@ -10,6 +11,11 @@ export const senderSidebarItems: ISidebarItem[] = [
     {
         title: "Dashboard",
         items: [
+            {
+                title: "Analytics",
+                url: "/sender/analytics",
+                component: Analytics
+            },
             {
                 title: "View All Parcel",
                 url: "/sender/view-parcel",

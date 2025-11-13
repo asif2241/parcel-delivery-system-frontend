@@ -13,6 +13,7 @@ import type { TRole } from "@/types";
 import ParcelTrackingPage from "@/pages/TrackParcel";
 import { HomeLayout } from "@/components/layout/HomeLayout";
 import { AboutUsPage } from "@/pages/AboutUsPage";
+import ContactUsPage from "@/pages/ContactUsPage";
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 Component: AboutUsPage,
                 path: "about-us"
+            },
+            {
+                Component: ContactUsPage,
+                path: "contact-us"
             }
         ]
     },

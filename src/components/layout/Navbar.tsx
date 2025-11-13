@@ -20,8 +20,8 @@ import { useAppDispatch } from "@/redux/hook"
 const navigationLinks = [
   { href: "/", label: "Home", active: true },
   { href: "about-us", label: "About Us", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
+  { href: "contact-us", label: "Contact Us", active: true },
+
 ]
 
 export default function Navbar() {

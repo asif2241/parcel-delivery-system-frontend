@@ -6,13 +6,18 @@ export default function AboutUsBanner() {
             <div className="mx-auto w-screen max-w-7xl px-4 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8">
                 <div className="max-w-prose text-left mb-4">
                     <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">
-                        About Our Company
-                        <strong className="text-indigo-600"> Innovating </strong>
-                        for a Better Future
+                        About <strong className="text-indigo-600">FastDrop</strong> —
+                        Redefining Parcel Delivery Across Bangladesh
                     </h1>
 
                     <p className="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed dark:text-gray-200">
-                        We are a passionate team dedicated to delivering innovative solutions that drive growth and transform businesses. With years of expertise and a commitment to excellence, we help our clients achieve their goals through cutting-edge technology and strategic thinking.
+                        At <span className="font-semibold text-indigo-600">FastDrop</span>, we’re on a mission
+                        to make parcel delivery faster, smarter, and more reliable for everyone.
+                        From local senders to nationwide logistics, we combine advanced tracking
+                        technology, secure handling, and dedicated support to ensure every delivery
+                        reaches safely and on time.
+                        <br className="hidden sm:block" />
+                        Our commitment is simple — to deliver trust, one parcel at a time.
                     </p>
                     <div className="mt-4 flex gap-4 sm:mt-6">
                         <a
