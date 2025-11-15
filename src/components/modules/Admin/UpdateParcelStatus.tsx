@@ -51,7 +51,7 @@ export function UpdateParcelStatus({ id }: { id: string }) {
     const [updateParcelStatus] = useUpdateParcelStatusMutation()
 
     // Only fetch when dialog is open
-    const { data: parcelData, isLoading, isError } = useGetSingleParcelQuery(id, {
+    const { data: parcelData } = useGetSingleParcelQuery(id, {
         skip: !id || !isDialogOpen,
     });
     // console.log(parcelData);
@@ -135,7 +135,7 @@ export function UpdateParcelStatus({ id }: { id: string }) {
                                         </FormControl>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {Object.entries(PARCEL_STATUS).map(([key, value]) => (
+                                                {Object.entries(PARCEL_STATUS).map(([_, value]) => (
                                                     <SelectItem key={value} value={value}>
                                                         {value}
                                                     </SelectItem>

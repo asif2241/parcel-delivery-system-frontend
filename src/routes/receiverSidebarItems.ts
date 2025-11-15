@@ -1,18 +1,17 @@
 
 // import Analytics from "@/pages/Admin/Analytics";
+import ParcelTablePage from "@/pages/ParcelTablePage";
 import type { ISidebarItem } from "@/types";
-import { lazy } from "react";
 
-const Analytics = lazy(() => import("@/pages/Analytics"));
 
 export const receiverSidebarItems: ISidebarItem[] = [
     {
         title: "Dashboard",
         items: [
             {
-                title: "Analytics",
-                url: "/admin/analytics",
-                component: Analytics,
+                title: "Parcel History",
+                url: "/receiver/history",
+                component: ParcelTablePage,
             },
         ],
     },

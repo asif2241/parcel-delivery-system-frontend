@@ -47,7 +47,7 @@ export default function Analytics() {
     }));
 
     return (
-        <div className="space-y-6 p-6 bg-gray-50 min-h-screen">
+        <div className="space-y-6 p-6 bg-gray-600 min-h-screen">
             {/* Page Title */}
             <div>
                 <h1 className="text-3xl font-bold text-gray-900">Parcel Analytics</h1>
@@ -85,7 +85,7 @@ export default function Analytics() {
                                     fill="#8884d8"
                                     dataKey="value"
                                 >
-                                    {pieData.map((entry, index) => (
+                                    {pieData.map((_, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>

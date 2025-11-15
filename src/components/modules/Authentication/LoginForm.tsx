@@ -10,7 +10,9 @@ import {
 import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
-import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { useLoginMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { Role } from "@/types/user.types";
+import { useEffect } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -22,6 +24,10 @@ export function LoginForm({
     const navigate = useNavigate();
     const form = useForm();
     const [login] = useLoginMutation();
+    const { data: userData, isSuccess } = useUserInfoQuery(undefined, {
+        skip: false,
+        refetchOnMountOrArgChange: true,
+    });
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
         console.log(data);
@@ -29,7 +35,8 @@ export function LoginForm({
             const res = await login(data).unwrap();
             console.log(res);
             toast.success("Login Successfull")
-            navigate("/")
+
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error(err);
@@ -40,6 +47,22 @@ export function LoginForm({
             // }
         }
     };
+
+    // role based redirect
+    useEffect(() => {
+        if (isSuccess && userData?.data?.role) {
+            const role = userData.data.role;
+            if (role === Role.SUPER_ADMIN || role === Role.ADMIN) {
+                navigate("/admin", { replace: true });
+            } else if (role === Role.SENDER) {
+                navigate("/sender", { replace: true });
+            } else if (role === Role.RECEIVER) {
+                navigate("/receiver", { replace: true });
+            } else {
+                navigate("/", { replace: true });
+            }
+        }
+    }, [isSuccess, userData, navigate]);
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>

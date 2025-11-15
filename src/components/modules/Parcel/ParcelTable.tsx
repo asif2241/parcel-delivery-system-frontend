@@ -11,7 +11,7 @@ import {
 import { useCancelParcelMutation, useGetAllParcelsQuery } from "@/redux/features/parcel/parcels.api"
 import type { IParcel } from "@/types/parcelTypes";
 import { ParcelFilters } from "./ParcelFilters";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { ParcelStatusBadge } from "./ParcelStatusBadge";
 // import { Button } from "@/components/ui/button";
 import { UpdateParcelStatus } from "../Admin/UpdateParcelStatus";
@@ -33,7 +33,7 @@ export default function ParcelTable() {
 
   // console.log(searchEmail);
   const { data } = useGetAllParcelsQuery({ searchEmail, limit, currentStatus, sort, page })
-  const { data: userInfo, isLoading } = useUserInfoQuery(undefined);
+  const { data: userInfo } = useUserInfoQuery(undefined);
   const [cancelParcel] = useCancelParcelMutation();
   // console.log(userInfo);
   // console.log(data);
@@ -92,7 +92,10 @@ export default function ParcelTable() {
           <TableBody>
             {data?.data?.map((parcel: IParcel) => (
               <TableRow key={parcel._id}>
-                <TableCell className="font-medium">{parcel.trackingId}</TableCell>
+                {/* <TableCell className="font-medium">{parcel.trackingId}</TableCell> */}
+                <TableCell className="font-medium">
+                  <Link className="hover:underline text-blue-600 hover:text-blue-800 transition-colors" to={`/track/${parcel.trackingId}`}>{parcel.trackingId}</Link>
+                </TableCell>
                 <TableCell className="text-center">
                   <ParcelStatusBadge status={parcel.currentStatus}></ParcelStatusBadge>
                 </TableCell>

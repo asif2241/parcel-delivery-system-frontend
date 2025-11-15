@@ -15,12 +15,18 @@ import { ModeToggle } from "./ModeToggler"
 import { Link } from "react-router"
 import { authApi, useLogoutMutation, useUserInfoQuery } from "@/redux/features/auth/auth.api"
 import { useAppDispatch } from "@/redux/hook"
+import { Role } from "@/types/user.types"
+import React from "react"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", active: true },
-  { href: "about-us", label: "About Us", active: true },
-  { href: "contact-us", label: "Contact Us", active: true },
+  { href: "/", label: "Home", active: true, role: "PUBLIC" },
+  { href: "about-us", label: "About Us", active: true, role: "PUBLIC" },
+  { href: "contact-us", label: "Contact Us", active: true, role: "PUBLIC" },
+  { href: "/admin", label: "Dashboard", role: Role.ADMIN, active: true },
+  { href: "/admin", label: "Dashboard", role: Role.SUPER_ADMIN },
+  { href: "/sender", label: "Dashboard", role: Role.SENDER },
+  { href: "/receiver", label: "Dashboard", role: Role.RECEIVER },
 
 ]
 
@@ -32,7 +38,7 @@ export default function Navbar() {
   console.log(data);
 
   const handleLogout = async () => {
-    await logout(undefined);
+    await logout(undefined).unwrap();
     dispatch(authApi.util.resetApiState())
   };
 
@@ -100,13 +106,28 @@ export default function Navbar() {
             <NavigationMenu className="h-full *:h-full max-md:hidden">
               <NavigationMenuList className="h-full gap-2 ">
                 {navigationLinks.map((link, index) => (
-                  <NavigationMenuItem key={index} className="">
-                    <NavigationMenuLink
-                      asChild className="py-1.5"
-                    >
-                      <Link to={link.href}>{link.label} </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                  <React.Fragment key={index}>
+                    {link.role === "PUBLIC" && (
+                      <NavigationMenuItem>
+                        <NavigationMenuLink
+                          asChild
+                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                        >
+                          <Link to={link.href}>{link.label}</Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )}
+                    {link.role === data?.data?.role && (
+                      <NavigationMenuItem>
+                        <NavigationMenuLink
+                          asChild
+                          className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                        >
+                          <Link to={link.href}>{link.label}</Link>
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    )}
+                  </React.Fragment>
                 ))}
               </NavigationMenuList>
             </NavigationMenu>

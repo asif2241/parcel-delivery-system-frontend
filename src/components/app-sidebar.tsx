@@ -29,8 +29,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <Link to="/">
+        <Link className="flex  items-center gap-1 text-primary hover:text-primary/90" to="/" >
           <img className="h-6 w-auto" src={Logo} alt="Logo" />
+          <span className="text-xl font-bold text-primary">FastDrop</span>
         </Link>
       </SidebarHeader>
       <SidebarContent>

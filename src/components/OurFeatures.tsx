@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardTitle } from "./ui/card";
 import trackParcelImg from "@/assets/images/trackParcel.svg"
 import supportParcelImg from "@/assets/images/call-support.svg"
 import safeParcelImg from "@/assets/images/safeParcel.svg"
@@ -27,7 +27,7 @@ export default function OurFeatures() {
             <div className=" grid md:grid-cols-3 grid-cols-1 gap-4 ">
                 {
                     ourFeatureData.map((data, idx) => (
-                        <Card className="max-w-[260px] text-center px-5 border-none mx-auto">
+                        <Card key={idx} className="max-w-[260px] text-center px-5 border-none mx-auto">
                             <div className="flex justify-center min-h-[160px]">
                                 <img className="w-40 rounded-3xl" src={data.image} alt="" />
                             </div>

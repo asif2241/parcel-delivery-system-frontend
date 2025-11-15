@@ -186,7 +186,7 @@ export default function CreateParcelForm() {
                                     </FormControl>
                                     <SelectContent>
                                         <SelectGroup>
-                                            {Object.entries(PARCEL_TYPE).map(([key, value]) => (
+                                            {Object.entries(PARCEL_TYPE).map(([_, value]) => (
                                                 <SelectItem key={value} value={value}>
                                                     {value}
                                                 </SelectItem>

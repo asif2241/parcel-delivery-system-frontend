@@ -42,7 +42,7 @@ export function UpdateUserRole({ id }: { id: string }) {
     const [updateUserRole] = useUpdateUserMutation()
 
     // Only fetch when dialog is open
-    const { data: userData, isLoading, isError } = useGetSingleUserQuery(id, {
+    const { data: userData } = useGetSingleUserQuery(id, {
         skip: !id || !isDialogOpen,
     });
 
@@ -124,7 +124,7 @@ export function UpdateUserRole({ id }: { id: string }) {
                                         </FormControl>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {Object.entries(Role).map(([key, value]) => (
+                                                {Object.entries(Role).map(([_, value]) => (
                                                     <SelectItem key={value} value={value}>
                                                         {value}
                                                     </SelectItem>
@@ -151,7 +151,7 @@ export function UpdateUserRole({ id }: { id: string }) {
                                         </FormControl>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {Object.entries(isActive).map(([key, value]) => (
+                                                {Object.entries(isActive).map(([_, value]) => (
                                                     <SelectItem key={value} value={value}>
                                                         {value}
                                                     </SelectItem>

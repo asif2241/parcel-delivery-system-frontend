@@ -8,12 +8,13 @@ import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { Unauthorized } from "@/pages/Unauthorized";
 import { withAuth } from "@/utils/withAuth";
-import { role } from "@/constant/role";
-import type { TRole } from "@/types";
-import ParcelTrackingPage from "@/pages/TrackParcel";
+
 import { HomeLayout } from "@/components/layout/HomeLayout";
 import { AboutUsPage } from "@/pages/AboutUsPage";
 import ContactUsPage from "@/pages/ContactUsPage";
+import { Role } from "@/types/user.types";
+import ParcelTrackingPage from "@/pages/TrackParcelPage";
+import { receiverSidebarItems } from "./receiverSidebarItems";
 
 export const router = createBrowserRouter([
     {
@@ -39,17 +40,7 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        Component: withAuth(DashboardLayout, role.SUPER_ADMIN as TRole),
-        path: "/admin",
-        children: [
-            {
-                index: true, element: <Navigate to="/admin/analytics" />
-            },
-            ...generateRoutes(adminSidebarItems)
-        ]
-    },
-    {
-        Component: withAuth(DashboardLayout, role.ADMIN as TRole),
+        Component: withAuth(DashboardLayout, ["ADMIN", "SUPER_ADMIN"]),
         path: "/admin",
         children: [
             {
@@ -59,14 +50,25 @@ export const router = createBrowserRouter([
         ]
     },
 
+
     {
-        Component: withAuth(DashboardLayout, role.SENDER as TRole),
+        Component: withAuth(DashboardLayout, [Role.SENDER]),
         path: "/sender",
         children: [
             {
                 index: true, element: <Navigate to="/sender/create-parcel" /> //ekane
             },
             ...generateRoutes(senderSidebarItems)
+        ]
+    },
+    {
+        Component: withAuth(DashboardLayout, [Role.RECEIVER]),
+        path: "/receiver",
+        children: [
+            {
+                index: true, element: <Navigate to="/receiver/history" /> //ekane
+            },
+            ...generateRoutes(receiverSidebarItems)
         ]
     },
 

@@ -90,7 +90,7 @@ export const UsersFilters = () => {
                         <SelectGroup>
                             {/* <SelectLabel>Fruits</SelectLabel> */}
                             {
-                                Object.entries(Role).map(([key, value]) => (
+                                Object.entries(Role).map(([_, value]) => (
                                     <SelectItem key={value} value={value}>{value}</SelectItem>
                                 ))
                             }

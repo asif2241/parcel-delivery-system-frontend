@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useSearchParams } from "react-router"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { PARCEL_STATUS, PARCEL_TYPE } from "@/types/parcelTypes"
+import { PARCEL_STATUS } from "@/types/parcelTypes"
 
 export const ParcelFilters = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -38,7 +38,7 @@ export const ParcelFilters = () => {
         <div className="flex flex-wrap items-center gap-4">
             {/* searching feature */}
             <div className="*:not-first:mt-2 ">
-                <Label htmlFor={id}>Search by Sender or Receiver Email</Label>
+                <Label htmlFor={id}>Search by  Email</Label>
                 <div className="relative max-w-[180px]">
                     <Input
                         onKeyUp={handleSearch}
@@ -90,7 +90,7 @@ export const ParcelFilters = () => {
                         <SelectGroup>
                             {/* <SelectLabel>Fruits</SelectLabel> */}
                             {
-                                Object.entries(PARCEL_STATUS).map(([key, value]) => (
+                                Object.entries(PARCEL_STATUS).map(([_, value]) => (
                                     <SelectItem key={value} value={value}>{value}</SelectItem>
                                 ))
                             }
