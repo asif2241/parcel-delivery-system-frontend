@@ -1,4 +1,4 @@
-# PARCEL DELIVERY SYSTEM (BACKEND)
+# PARCEL DELIVERY SYSTEM (FRONTEND)
 
 #### The **Parcel Delivery System** is a full-stack web application designed to manage the lifecycle of parcel delivery — from booking to final delivery. This system is a secure, modular and supports multiple user roles (Admin, Sender, Receiver) and offers features such as real-time tracking, status updates, and role-based access control.
 
