@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# PARCEL DELIVERY SYSTEM (BACKEND)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### The **Parcel Delivery System** is a full-stack web application designed to manage the lifecycle of parcel delivery — from booking to final delivery. This system is a secure, modular and supports multiple user roles (Admin, Sender, Receiver) and offers features such as real-time tracking, status updates, and role-based access control.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Core Features
 
-## React Compiler
+- **⚡ Modern & Responsive UI:**Built with React, TailwindCSS, and ShadCN UI, ensuring a clean, responsive experience across all devices.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **🌗 Smart Theme System:**Includes a smooth Dark/Light mode toggle, storing the user's theme preference for a personalized experience.
 
-## Expanding the ESLint configuration
+- **🔐 Seamless Authentication Flow:** Fully integrated login, signup, and logout experience using RTK Query, with state persistence and automatic user data fetching.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **🔍 Real-Time Tracking System:** Every parcel is assigned a unique, trackable ID. The embedded status history allows users to monitor the parcel's journey from origin to destination
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **⚙️ Admin Oversight:**: A powerful Admin role with the ability to view and manage all users and parcels, update delivery statuses, and ensure the smooth operation of the system.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Role-Based Dashboards:**: A powerful Admin role with the ability to view and manage all users and parcels, update delivery statuses, and ensure the smooth operation of the system.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **📩 Real-Time Status Updates:**: Displays updated parcel information instantly using Redux Toolkit caching and automatic re-fetching.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **🧭 Easy Navigation:**: Smooth routing with React Router, including protected/private routes that ensure only authorized users can access sensitive pages.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **🔍 Interactive Tracking Interface:**: Users can enter tracking IDs and instantly view parcel status, progress, and movement history.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## ⚙️ **Technologies Used:**
+
+- **Framework:**: ReactJS
+- **State Management:**: Redux Toolkit
+- **Routing:**: React Router
+- **UI & Styling:**: Tailwind CSS + ShadCN UI , OriginUI
+- **Authentication:**: JWT, Role-based auth
+- **API Handling:**: Axios
+- **Build & Deployment:**Vercel (Frontend Hosting)
+
+---
+
+[LIVE URL](https://parcel-delivery-client-b5a6.vercel.app/)
